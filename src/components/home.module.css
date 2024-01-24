@@ -1,0 +1,107 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 800px;
+  margin: 45px auto;
+  border-radius: 15px;
+}
+.contenedor img {
+  width: 20%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin: 0;
+}
+.seccionTitle {
+  width: 790px;
+  background-color: #E0F1F0;
+  font-family: 'Oswald', sans-serif;
+ text-align: left;
+  line-height: 40px;
+  padding-left: 10px;
+  margin: 0;
+
+  color: rgb(5, 46, 79);
+}
+
+.infoGeneralContainer {
+  width: auto;
+}
+
+.imgInfoGeneral {
+  display: flex;
+}
+
+.infoGeneral {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  font-size: 15px;
+}
+.infoGeneral span {
+  /* Añade un borde para visualización */
+  font-weight: bold;
+  font-family: 'Oswald', sans-serif;
+  
+}
+.equipo {
+  width: 100%;
+  background-color: aliceblue;
+  margin: 0;
+  text-align: center;
+}
+.marca {
+  /* background-color: #f5f5f5; */
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.modelo {
+  /* background-color: #f5f5f5; */
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.serie {
+  background-color: aliceblue;
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.inventario {
+  background-color: aliceblue;
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.invima {
+  /* background-color: #f5f5f5; */
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.sede {
+  /* background-color: #f5f5f5; */
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.servicio {
+  background-color: aliceblue;
+  width: 312px;
+  margin: 0;
+  padding-left: 8px;
+}
+.ubicacion {
+  padding-left: 8px;
+  width: 312px;
+  margin: 0;
+  background-color: aliceblue;
+}
+.localizacion {
+  padding-left: 8px;
+  width: 100%;
+  margin: 0;
+  /* background-color: #f5f5f5; */
+}
