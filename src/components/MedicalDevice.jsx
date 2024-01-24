@@ -1,14 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMedicalDevices, getMedicalDeviceDetail } from "../redux/actions/actions";
+import { useNavigate, useParams } from "react-router-dom";
 
 // MedicalDevice es el componente que se va a ver en la lista de todos los equipos
 
 const MedicalDevice = () => {
-  const [equipos, setEquipos] = useState([]);
+  const equipos = useSelector((state) => state.listaEquipos);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const goToDetail = (id)=>{
+    navigate(`/device/${id}`)
+  }
+
   useEffect(() => {
     const getDevices = async () => {
-      const response = await axios("http://localhost:8080/devices");
-      setEquipos(response.data);
+      dispatch(getAllMedicalDevices());
     };
     getDevices();
   }, []);
@@ -34,7 +41,7 @@ const MedicalDevice = () => {
           <tbody>
             {equipos?.map((equipo, i) => {
               return (
-                <tr key={i}>
+                <tr key={i} onClick={()=>{goToDetail(equipo.id)}}>
                   <th scope="row">{equipo.nombre}</th>
                   <td>{equipo.marca}</td>
                   <td>{equipo.modelo}</td>
