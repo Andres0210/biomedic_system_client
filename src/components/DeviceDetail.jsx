@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMedicalDeviceDetail } from "../redux/actions/actions";
+import {
+  borrarDetalle,
+  getMedicalDeviceDetail,
+} from "../redux/actions/actions";
 import { useParams } from "react-router-dom";
-import estilos from "./home.module.css"
+import estilos from "./home.module.css";
 
 const DeviceDetail = () => {
   const dispatch = useDispatch();
@@ -15,112 +18,236 @@ const DeviceDetail = () => {
     };
     getDevice(id);
     console.log("hola");
-    return () => {};
+    return () => {
+      dispatch(borrarDetalle());
+    };
   }, []);
 
   return (
-    <div className={estilos.contenedor}>
-    <div className={estilos.infoGeneralContainer}>
-      <h4 className={estilos.seccionTitle}>Informacion General</h4>
-      <div>
-        <div className={estilos.imgInfoGeneral}>
-          <img alt="" src={equipo.imagen}></img>
+    <div>
+      {equipo && (
+        <div className={estilos.contenedor}>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>Informacion General</h4>
+            <div>
+              <div className={estilos.imgInfoGeneral}>
+                <div className={estilos.contenedorImagen}>
+                  <img
+                    lassName={estilos.imagen}
+                    alt=""
+                    src={equipo.imagen}
+                  ></img>
+                </div>
+                <div className={estilos.infoGeneral}>
+                  <div className={estilos.equipo}>
+                    <h3>{equipo.nombre}</h3>
+                  </div>
+                  <div className={estilos.marca}>
+                    <p>
+                      <span>Marca:</span> {equipo.marca}
+                    </p>
+                  </div>
+                  <div className={estilos.modelo}>
+                    <p>
+                      <span>Modelo:</span> {equipo.modelo}
+                    </p>
+                  </div>
+                  <div className={estilos.serie}>
+                    <p>
+                      <span>Serie:</span> {equipo.serie}
+                    </p>
+                  </div>
+                  <div className={estilos.inventario}>
+                    <p>
+                      <span>Inventario:</span> {equipo.inventario}
+                    </p>
+                  </div>
+                  <div className={estilos.invima}>
+                    <p>
+                      <span>Registro Invima:</span> {equipo.invima}
+                    </p>
+                  </div>
+                  <div className={estilos.sede}>
+                    <p>
+                      <span>Sede:</span> {equipo.datosUbicacion?.sede}
+                    </p>
+                  </div>
+                  <div className={estilos.servicio}>
+                    <p>
+                      <span>Servicio:</span> {equipo.datosUbicacion?.servicio}
+                    </p>
+                  </div>
+                  <div className={estilos.ubicacion}>
+                    <p>
+                      <span>Ubicacion:</span> {equipo.datosUbicacion?.ubicacion}
+                    </p>
+                  </div>
+                  <div className={estilos.localizacion}>
+                    <p>
+                      <span>Localizacion:</span>{" "}
+                      {equipo.datosUbicacion?.localizacion}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <div className={estilos.infoGeneral}>
-            <h3 className={estilos.equipo}>{equipo.nombre}</h3>
-            <p className={estilos.marca}>
-              <span>Marca:</span> {equipo.marca}
-            </p>
-            <p className={estilos.modelo}>
-              <span>Modelo:</span> {equipo.modelo}
-            </p>
-            <p className={estilos.serie}>
-              <span>Serie:</span> {equipo.serie}
-            </p>
-            <p className={estilos.inventario}>
-              <span>Inventario:</span> {equipo.inventario}
-            </p>
-            <p className={estilos.invima}>
-              <span>Registro Invima:</span> {equipo.invima}
-            </p>
-            <p className={estilos.sede}>
-              <span>Sede:</span> {equipo.datosUbicacion.sede}
-            </p>
-            <p className={estilos.servicio}>
-              <span>Servicio:</span> {equipo.datosUbicacion.servicio}
-            </p>
-            <p className={estilos.ubicacion}>
-              <span>Ubicacion:</span> {equipo.datosUbicacion.ubicacion}
-            </p>
-            <p className={estilos.localizacion}>
-              <span>Localizacion:</span>{" "}
-              {equipo.datosUbicacion.localizacion}
-            </p>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>Registro histórico</h4>
+            <div className={estilos.datosAdquisicion}>
+              <div className={estilos.forma}>
+                <p>
+                  <span>Forma de Adquisición:</span>{" "}
+                  {equipo.datosAdquisicion?.forma_adquisicion}
+                </p>
+              </div>
+              <div className={estilos.fechaAdquisicion}>
+                <p>
+                  <span>Fecha de Adquisicion:</span>{" "}
+                  {equipo.datosAdquisicion?.fecha_adquisicion}
+                </p>
+              </div>
+              <div className={estilos.fechaInstalacion}>
+                <p>
+                  <span>Fecha de Instalación:</span>{" "}
+                  {equipo.datosAdquisicion?.fecha_instalacion}
+                </p>
+              </div>
+              <div className={estilos.duracionGarantia}>
+                <p>
+                  <span>Duracion de Garantía:</span>{" "}
+                  {equipo.datosAdquisicion?.garantia} meses{" "}
+                </p>
+              </div>
+              <div className={estilos.vencGarantia}>
+                <p>
+                  <span>Vencimiento de garantía:</span>{" "}
+                  {equipo.datosAdquisicion?.vencimiento_garantia}
+                </p>
+              </div>
+              <div className={estilos.estadoGarantia}>
+                <p>
+                  <span>Estado de garantía:</span>{" "}
+                  {equipo.datosAdquisicion?.estado_garantia ? (
+                    <span id={estilos.vigente}>Vigente</span>
+                  ) : (
+                    <span>Caducada</span>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>
+              Registro Técnico de Instalación
+            </h4>
+            <div className={estilos.datosTecnicos}>
+              <div className={estilos.voltaje}>
+                <p>
+                  <span>Voltaje:</span> {equipo.datosTecnicos?.voltaje}V AC
+                </p>
+              </div>
+              <div className={estilos.corriente}>
+                <p>
+                  <span>Corriente:</span> {equipo.datosTecnicos?.corriente}A
+                </p>
+              </div>
+              <div className={estilos.potencia}>
+                <p>
+                  <span>Potencia:</span> {equipo.datosTecnicos?.potencia}W
+                </p>
+              </div>
+              <div className={estilos.temperatura}>
+                <p>
+                  <span>Temperatura:</span> {equipo.datosTecnicos?.temperatura}
+                  °C
+                </p>
+              </div>
+              <div className={estilos.humedad}>
+                <p>
+                  <span>Humedad:</span> {equipo.datosTecnicos?.humedad}%
+                </p>
+              </div>
+              <div className={estilos.peso}>
+                <p>
+                  <span>Peso:</span> {equipo.datosTecnicos?.peso}Kg
+                </p>
+              </div>
+              <div className={estilos.bateria}>
+                <p>
+                  <span>Bateria:</span> {equipo.datosTecnicos?.bateria}V
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>Registro de apoyo Técnico</h4>
+            <div className={estilos.apoyoTecnico}>
+              <div className={estilos.tecnologia}>
+                <p>
+                  <span>Tecnologia dominante:</span> {equipo.tecnologia}
+                </p>
+              </div>
+              <div className={estilos.clasificacion}>
+                <p>
+                  <span>Clasificacion Biomédica:</span> {equipo.clas_biomedica}
+                </p>
+              </div>
+              <div className={estilos.riesgo}>
+                <p>
+                  <span>Clasificación de riesgo:</span> {equipo.riesgo}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>Mantenimiento Preventivo</h4>
+            <div className={estilos.datosMantenimiento}>
+              <div className={estilos.calibracion}>
+                <p>
+                  <span>Requiere Calibracion:</span>{" "}
+                  {equipo.calibracion ? "Si" : "No"}
+                </p>
+              </div>
+              <div className={estilos.periocidad}>
+                <p>
+                  <span>Periocidad de Mantenimiento Preventivo:</span>{" "}
+                  {equipo.periocidad}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={estilos.registroContainer}>
+            <h4 className={estilos.seccionTitle}>Accesorios</h4>
+            <div className={estilos.datosAccesorios}>
+              <table className={estilos.tablaAccesorios}>
+                <thead>
+                  <tr>
+                    <th>Accesorio</th>
+                    <th>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {equipo.accesorios?.map((accesorio, i) => {
+                    return (
+                      <tr key={i}>
+                        <td className={estilos.accesorio}>
+                          {accesorio.accesorio}
+                        </td>
+                        <td className={estilos.accesorio}>
+                          {accesorio.cantidad}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-    <div>
-      <h4 className={estilos.seccionTitle}>Registro histórico</h4>
-      <span>
-        Forma de Adquisición:{" "}
-        {equipo.datosAdquisicion.forma_adquisicion}
-      </span>
-      <span>
-        Fecha de Adquisicion:{" "}
-        {equipo.datosAdquisicion.fecha_adquisicion}
-      </span>
-      <span>
-        Fecha de Instalación:{" "}
-        {equipo.datosAdquisicion.fecha_instalacion}
-      </span>
-      <span>
-        Duracion de Garantía: {equipo.datosAdquisicion.garantia} meses{" "}
-      </span>
-      <span>
-        Vencimiento de garantía:{" "}
-        {equipo.datosAdquisicion.vencimiento_garantia}
-      </span>
-      <span>
-        Estado de garantía:{" "}
-        {equipo.datosAdquisicion.estado_garantia ? (
-          <span>Vigente</span>
-        ) : (
-          <span>Caducada</span>
-        )}
-      </span>
-    </div>
-    <div>
-      <h4 className={estilos.seccionTitle}>
-        Registro Técnico de Instalación
-      </h4>
-      <span>Voltaje: {equipo.datosTecnicos.voltaje}V AC</span>
-      <span>Corriente: {equipo.datosTecnicos.corriente}A</span>
-      <span>Potencia: {equipo.datosTecnicos.potencia}W</span>
-      <span>Temperatura: {equipo.datosTecnicos.temperatura}°C</span>
-      <span>Humedad: {equipo.datosTecnicos.humedad}%</span>
-      <span>Peso: {equipo.datosTecnicos.peso}Kg</span>
-      <span>Bateria: {equipo.datosTecnicos.bateria}V</span>
-    </div>
-    <div>
-      <h4 className={estilos.seccionTitle}>
-        Registro de apoyo Técnico
-      </h4>
-      <span>Tecnologia dominante: {equipo.tecnologia}</span>
-      <span>Clasificacion Biomédica: {equipo.clas_biomedica}</span>
-      <span>Clasificación de riesgo: {equipo.riesgo}</span>
-    </div>
-    <div>
-      <h4 className={estilos.seccionTitle}>Mantenimiento Preventivo</h4>
-      <span>
-        Requiere Calibracion:{" "}
-        {equipo.calibracion ? <span>Si</span> : <span>No</span>}
-      </span>
-      <span>
-        Periocidad de Mantenimiento Preventivo: {equipo.periocidad}
-      </span>
-    </div>
-  </div>
   );
 };
 

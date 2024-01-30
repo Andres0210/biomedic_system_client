@@ -1,4 +1,4 @@
-import { GET_DEVICE_DETAIL, GET_EQUIPOS } from "../actions/actions";
+import { DELETE_DETAIL, GET_DEVICE_DETAIL, GET_EQUIPOS } from "../actions/actions";
 
 const initialState = {
   listaEquipos: [],
@@ -17,6 +17,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         deviceDetail: action.payload,
       };
+      case DELETE_DETAIL:
+        return {
+          ...state,
+          deviceDetail: {}
+        }
     default:
       return { ...state };
   }

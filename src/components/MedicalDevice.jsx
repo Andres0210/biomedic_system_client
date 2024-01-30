@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMedicalDevices, getMedicalDeviceDetail } from "../redux/actions/actions";
-import { useNavigate, useParams } from "react-router-dom";
+import { getAllMedicalDevices } from "../redux/actions/actions";
+import { useNavigate } from "react-router-dom";
 
 // MedicalDevice es el componente que se va a ver en la lista de todos los equipos
 
@@ -13,6 +13,10 @@ const MedicalDevice = () => {
     navigate(`/device/${id}`)
   }
 
+  const goToRegister = ()=>{
+    navigate("/registroEquipo")
+  }
+
   useEffect(() => {
     const getDevices = async () => {
       dispatch(getAllMedicalDevices());
@@ -21,6 +25,7 @@ const MedicalDevice = () => {
   }, []);
   return (
     <div class="container mt-5">
+    <button onClick={goToRegister} class="btn btn-primary mb-4">Registrar Equipo</button>
       <div class="container">
         <table class="table table-hover table-striped table-bordered table-sm">
           <thead class="table-dark">
@@ -41,7 +46,7 @@ const MedicalDevice = () => {
           <tbody>
             {equipos?.map((equipo, i) => {
               return (
-                <tr key={i} onClick={()=>{goToDetail(equipo.id)}}>
+                <tr key={i} onClick={()=>{goToDetail(equipo.id)}} style={{cursor: "pointer"}}>
                   <th scope="row">{equipo.nombre}</th>
                   <td>{equipo.marca}</td>
                   <td>{equipo.modelo}</td>

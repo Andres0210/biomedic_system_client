@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_EQUIPOS = "GET_EQUIPOS";
 export const GET_DEVICE_DETAIL = "GET_DEVICE_DETAIL";
+export const DELETE_DETAIL = "DELETE_DETAIL";
 
 
 // Lista de equipos medicos
@@ -12,7 +13,7 @@ export const getAllMedicalDevices = () => {
         const response = await axios("http://localhost:8080/devices");
         return dispatch({
             type: GET_EQUIPOS,
-            payload: response.data
+            payload: response.data.content
         })
     } catch (error) {}
   };
@@ -31,5 +32,11 @@ export const getMedicalDeviceDetail = (id) => {
         } catch (error) {
             
         }
+    }
+}
+
+export const borrarDetalle = () => {
+    return {
+        type: DELETE_DETAIL
     }
 }
