@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
 import DeviceDetail from "./components/DeviceDetail";
-import FormularioRegistro from "./components/FormularioRegistro";
+import FormularioRegistro from "./components/formulario_registro/FormularioRegistro";
 
 function App() {
   return (

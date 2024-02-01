@@ -1,0 +1,167 @@
+.container {
+  background-color: rgb(245, 246, 246);
+  width: 80%;
+  margin: 50px auto;
+  padding: 30px;
+}
+
+/*Estilos para Datos Generalos*/
+
+.general {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+}
+
+.general label {
+  width: 200px;
+  font-weight: 300;
+}
+
+.general input::placeholder {
+  font-weight: 100;
+  font-style: italic;
+}
+
+.equipo {
+  grid-area: 1 / 1 / 2 / 2;
+  font-weight: 100;
+}
+
+.marca {
+  grid-area: 1 / 2 / 2 / 3;
+  font-weight: 400;
+}
+.modelo {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.serie {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.inventario {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.imagen {
+  grid-area: 3 / 2 / 4 / 3;
+}
+.invima {
+  grid-area: 4 / 1 / 5 / 2;
+}
+.calibracion {
+  grid-area: 4 / 2 / 5 / 3;
+}
+.riesgo {
+  grid-area: 5 / 1 / 6 / 2;
+}
+.clasificacion {
+  grid-area: 5 / 2 / 6 / 3;
+}
+.tecnologia {
+  grid-area: 6 / 1 / 7 / 2;
+}
+
+.periocidad {
+  grid-area: 6 / 2 / 7 / 3;
+}
+
+/*Estilos para Datos tecnicos*/
+
+.tecnicos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+}
+
+.tecnicos label {
+  width: 80px;
+  font-weight: 300;
+}
+.tecnicos input::placeholder {
+  font-weight: 100;
+  font-style: italic;
+}
+
+.voltaje {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.corriente {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.potencia {
+  grid-area: 1 / 3 / 2 / 4;
+}
+.frecuencia {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.temperatura {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.humedad {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.bateria {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.peso {
+  grid-area: 2 / 4 / 3 / 5;
+}
+
+/*Estilos para datos de adquisicon*/
+
+.adquisicion {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 150px;
+  grid-row-gap: 15px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+}
+
+.adquisicion label {
+  width: 180px;
+  font-weight: 300;
+}
+
+.forma {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.adquisicion_forma {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.instalacion {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.garantia {
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.accesorios {
+
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+}
+
+.accesorios label{
+  
+  font-weight: 300;
+}
+.accesorios input::placeholder{
+  font-weight: 100;
+  font-style: italic;
+}
+
+/* .accesorios .cantidad {
+  width: 50px;
+  border: none;
+} */
+
