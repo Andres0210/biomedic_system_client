@@ -146,16 +146,14 @@
 }
 
 .accesorios {
-
   font-family: "Oswald", sans-serif;
   font-weight: 100;
 }
 
-.accesorios label{
-  
+.accesorios label {
   font-weight: 300;
 }
-.accesorios input::placeholder{
+.accesorios input::placeholder {
   font-weight: 100;
   font-style: italic;
 }
@@ -165,3 +163,23 @@
   border: none;
 } */
 
+.ubicacion {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+  margin-top: 30px;
+}
+.ubicacion label {
+  width: 100px;
+  font-weight: 300;
+  
+}
+.subtitulo {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  
+}

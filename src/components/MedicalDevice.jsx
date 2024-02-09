@@ -16,6 +16,9 @@ const MedicalDevice = () => {
   const goToRegister = ()=>{
     navigate("/registroEquipo")
   }
+  const goToRegisterFormik = ()=>{
+    navigate("/registroFormik")
+  }
 
   useEffect(() => {
     const getDevices = async () => {
@@ -26,6 +29,7 @@ const MedicalDevice = () => {
   return (
     <div class="container mt-5">
     <button onClick={goToRegister} class="btn btn-primary mb-4">Registrar Equipo</button>
+    <button onClick={goToRegisterFormik} class="btn btn-primary mb-4">Registrar Equipo Formik</button>
       <div class="container">
         <table class="table table-hover table-striped table-bordered table-sm">
           <thead class="table-dark">

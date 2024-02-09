@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
 import DeviceDetail from "./components/DeviceDetail";
 import FormularioRegistro from "./components/formulario_registro/FormularioRegistro";
+import FormularioRegistroFormik from "./components/formulario_registro/FormularioRegistroFormik";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/devices" element={<MedicalDevice />}></Route>
           <Route path="/device/:id" element={<DeviceDetail/>}></Route>
           <Route path="/registroEquipo" element={<FormularioRegistro/>}></Route>
+          <Route path="/registroFormik" element={<FormularioRegistroFormik/>}></Route> 
         </Routes>
       </div>
     </BrowserRouter>

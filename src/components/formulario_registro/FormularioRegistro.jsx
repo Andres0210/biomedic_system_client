@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import estilos from "../formulario_registro/formularioStyles.module.css";
+import InfoGeneral from "./InfoGeneral";
+import DatosTecnicos from "./DatosTecnicos";
+import DatosAdquisicion from "./DatosAdquisicion";
+import Accesorios from "./Accesorios";
+import DatosUbicacion from "./DatosUbicacion";
+import axios from "axios";
+import Protocolos from "./Protocolos";
+import FormularioRegistroFormik from "./FormularioRegistroFormik";
+
 
 const FormularioRegistro = () => {
+
+
   const [datosRegistro, setDatosRegistro] = useState({
     nombre: "",
     marca: "",
@@ -37,8 +48,14 @@ const FormularioRegistro = () => {
       ubicacion: "",
       localizacion: "",
     },
-    accesorios: [{ accesorio: "", cantidad: 0 }],
+    accesorios: [],
+    protocolo: {
+      nombreProtocolo: "",
+      acciones: [],
+    },
   });
+
+  //
 
   // Funcion para manejar los inputs
 
@@ -134,6 +151,58 @@ const FormularioRegistro = () => {
     });
   };
 
+  const handleSelectChange4 = (e) => {
+    const { name, value } = e.target;
+    setDatosRegistro({
+      ...datosRegistro,
+      datosUbicacion: {
+        ...datosRegistro.datosUbicacion,
+        [name]: value,
+      },
+    });
+  };
+
+  const handleNombreProtocolo = (e) => {
+    setDatosRegistro({
+      ...datosRegistro,
+      protocolo: {
+        ...datosRegistro.protocolo,
+        nombreProtocolo: e.target.value,
+      },
+    });
+  };
+
+  const handleAccionProtocoloChange = (index, e) => {
+    const nuevasAcciones = [...datosRegistro.protocolo.acciones];
+    nuevasAcciones[index] = { accion: e.target.value };
+    setDatosRegistro({
+      ...datosRegistro,
+      protocolo: { ...datosRegistro.protocolo, acciones: nuevasAcciones },
+    });
+  };
+
+  // Función para agregar una nueva acción al protocolo
+  const agregarAccionProtocolo = (e) => {
+    e.preventDefault();
+    setDatosRegistro({
+      ...datosRegistro,
+      protocolo: {
+        ...datosRegistro.protocolo,
+        acciones: [...datosRegistro.protocolo.acciones, { accion: "" }],
+      },
+    });
+  };
+
+  const handleRemoveAccion = (index) => {
+    const newAccion = [...datosRegistro.protocolo.acciones];
+    newAccion.splice(index, 1);
+
+    setDatosRegistro({
+      ...datosRegistro,
+      protocolo: { ...datosRegistro.protocolo, acciones: newAccion },
+    });
+  };
+
   const estiloLegend = {
     fontWeight: "500",
     color: "#777",
@@ -142,518 +211,64 @@ const FormularioRegistro = () => {
     fontStyle: "italic",
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:8080/devices", datosRegistro);
+    console.log("datos de registro: ", datosRegistro);
+  };
+
   return (
     <div>
       <form class="mt-5" className={estilos.container}>
-        <fieldset
-          class="border p-4 mb-5 rounded"
-          className={estilos.generalContainer}
-        >
-          <legend
-            class="float-none w-auto p-2 text-sm-start"
-            style={estiloLegend}
-          >
-            Información General
-          </legend>
-          <div className={estilos.general}>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="nombre">
-                Nombre Equipo{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={datosRegistro.nombre}
-                placeholder="Ingrese nombre de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
+        {/* Componente que muestra la informacion general */}
+        <InfoGeneral
+          estiloLegend={estiloLegend}
+          datosRegistro={datosRegistro}
+          handleInputChange={handleInputChange}
+          handleSelectChange={handleSelectChange}
+          handleSelectChange2={handleSelectChange2}
+        />
 
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="marca">
-                Marca{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="marca"
-                name="marca"
-                value={datosRegistro.marca}
-                placeholder="Ingrese marca de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="modelo">
-                Modelo{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="modelo"
-                name="modelo"
-                value={datosRegistro.modelo}
-                placeholder="Ingrese modelo de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="serie">
-                Serie{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="serie"
-                name="serie"
-                value={datosRegistro.serie}
-                placeholder="Ingrese serie de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="inventario">
-                Inventario{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="inventario"
-                name="inventario"
-                value={datosRegistro.inventario}
-                placeholder="Ingrese inventario de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="imagen">
-                Imagen{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="imagen"
-                name="imagen"
-                value={datosRegistro.imagen}
-                placeholder="Ingrese imagen de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="invima">
-                Registro Invima{" "}
-              </label>
-              <input
-                class="form-control"
-                type="text"
-                id="invima"
-                name="invima"
-                value={datosRegistro.invima}
-                placeholder="Ingrese invima de equipo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="calibracion">
-                Requiere Calibracion{" "}
-              </label>
-              <select
-                id="calibracion"
-                name="estado"
-                value={
-                  datosRegistro.calibracion !== null
-                    ? datosRegistro.calibracion?.toString()
-                    : ""
-                }
-                onChange={handleSelectChange}
-                class="form-select"
-              >
-                <option selected>Elija una opción</option>
-                <option value={true}>SI</option>
-                <option value={false}>NO</option>
-              </select>
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="riesgo">
-                Clasificación de Riesgo{" "}
-              </label>
-              <select
-                id="riesgo"
-                name="riesgo"
-                onChange={handleSelectChange2}
-                class="form-select"
-              >
-                <option selected disabled>
-                  Elija una opción
-                </option>
-                <option value="I">I</option>
-                <option value="IIA">IIA</option>
-                <option value="IIB">IIB</option>
-                <option value="III">III</option>
-              </select>
-            </div>
+        {/* Componente que muestra los datos técnicos */}
+        <DatosTecnicos
+          estiloLegend={estiloLegend}
+          datosRegistro={datosRegistro}
+          handleInputChangeDatosTecnicos={handleInputChangeDatosTecnicos}
+        />
 
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="clas_biomedica">
-                Clasificación Biomédica{" "}
-              </label>
-              <select
-                id="clas_biomedica"
-                name="clas_biomedica"
-                onChange={handleSelectChange2}
-                class="form-select"
-              >
-                <option selected disabled>
-                  Elija una opción
-                </option>
-                <option value="DIAGNÓSTICO">DIAGNÓSTICO</option>
-                <option value="PREVENCIÓN">PREVENCIÓN</option>
-                <option value="LABORATORIO">LABORATORIO</option>
-                <option value="ESTERILIZACIÓN">ESTERILIZACIÓN</option>
-                <option value="TRATAMIENTO_Y_MANTENIMIENTO_DE_LA_VIDA">
-                  TRATAMIENTO Y MANTENIMIENTO DE LA VIDA
-                </option>
-              </select>
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="tecnologia">
-                Tecnología predominante{" "}
-              </label>
-              <select
-                id="tecnologia"
-                name="tecnologia"
-                onChange={handleSelectChange2}
-                class="form-select"
-              >
-                <option selected disabled>
-                  Elija una opción
-                </option>
-                <option value="ELÉCTRICO">ELÉCTRICO</option>
-                <option value="ELECTRÓNICO">ELECTRÓNICO</option>
-                <option value="NEUMÁTICO">NEUMÁTICO</option>
-                <option value="MECÁNICO">MECÁNICO</option>
-                <option value="ELECTROMECÁNICO">ELECTROMECÁNICO</option>
-              </select>
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="periocidad">
-                Periocidad de mantenimiento{" "}
-              </label>
-              <select
-                id="periocidad"
-                name="periocidad"
-                onChange={handleSelectChange2}
-                class="form-select"
-              >
-                <option disabled selected>
-                  Elija una opción
-                </option>
-                <option value="MENSUAL">MENSUAL</option>
-                <option value="TRIMESTRAL">TRIMESTRAL</option>
-                <option value="CUATRIMESTRAL">CUATRIMESTRAL</option>
-                <option value="SEMESTRAL">SEMESTRAL</option>
-                <option value="ANUAL">ANUAL</option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset
-          class="border p-4 mb-5 rounded"
-          className={estilos.generalContainer}
-        >
-          <legend
-            class="float-none w-auto p-2 text-sm-start"
-            style={estiloLegend}
-          >
-            Datos Técnicos
-          </legend>
-          <div className={estilos.tecnicos}>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="voltaje">
-                Voltaje{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="voltaje"
-                name="voltaje"
-                value={datosRegistro.datosTecnicos.voltaje}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
+        {/* Componente que muestra los datos de Adquisicion */}
+        <DatosAdquisicion
+          estiloLegend={estiloLegend}
+          handleSelectChange3={handleSelectChange3}
+          handleInputChangeDatosAdquisicion={handleInputChangeDatosAdquisicion}
+          datosRegistro={datosRegistro}
+        />
 
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="corriente">
-                Corriente{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="corriente"
-                name="corriente"
-                value={datosRegistro.datosTecnicos.corriente}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="frecuencia">
-                Frecuencia{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="frecuencia"
-                name="frecuencia"
-                value={datosRegistro.datosTecnicos.frecuencia}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="potencia">
-                Potencia{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="potencia"
-                name="potencia"
-                value={datosRegistro.datosTecnicos.potencia}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="temperatura">
-                Temperatura{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="temperatura"
-                name="temperatura"
-                value={datosRegistro.datosTecnicos.temperatura}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="humedad">
-                Humedad{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="humedad"
-                name="humedad"
-                value={datosRegistro.datosTecnicos.humedad}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="peso">
-                Peso{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="peso"
-                name="peso"
-                value={datosRegistro.datosTecnicos.peso}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="bateria">
-                Batería{" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="bateria"
-                name="bateria"
-                value={datosRegistro.datosTecnicos.bateria}
-                onChange={(e) => {
-                  handleInputChangeDatosTecnicos(e);
-                }}
-              />
-            </div>
-          </div>
-        </fieldset>
-        <fieldset class="border p-4 mb-5 rounded">
-          <legend
-            class="float-none w-auto p-2 text-sm-start"
-            style={estiloLegend}
-          >
-            Datos de Adquisición
-          </legend>
-          <div className={estilos.adquisicion}>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="forma_adquisicion">
-                Forma de Adquisición{" "}
-              </label>
-              <select
-                id="forma_adquisicion"
-                name="forma_adquisicion"
-                onChange={handleSelectChange3}
-                class="form-select"
-              >
-                <option disabled selected>
-                  Elija una opción
-                </option>
-                <option value="COMPRA">Compra</option>
-                <option value="DONACION">Donación</option>
-                <option value="PRESTAMO">Préstamo</option>
-                <option value="COMODATO">Comodato</option>
-                <option value="ALQUILER">Alquiler</option>
-              </select>
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="fecha_adquisicion">
-                Fecha de Adquisición{" "}
-              </label>
-              <input
-                class="form-control"
-                type="date"
-                id="fecha_adquisicion"
-                name="fecha_adquisicion"
-                value={datosRegistro.datosAdquisicion.fecha_adquisicion}
-                onChange={(e) => {
-                  handleInputChangeDatosAdquisicion(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="fecha_instalacion">
-                Fecha de Instalación{" "}
-              </label>
-              <input
-                class="form-control"
-                type="date"
-                id="fecha_instalacion"
-                name="fecha_instalacion"
-                value={datosRegistro.datosAdquisicion.fecha_instalacion}
-                onChange={(e) => {
-                  handleInputChangeDatosAdquisicion(e);
-                }}
-              />
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-              <label class="input-group-text" htmlFor="garantia">
-                Tiempo de garantía (Meses){" "}
-              </label>
-              <input
-                class="form-control"
-                type="number"
-                id="garantia"
-                name="garantia"
-                value={datosRegistro.datosAdquisicion.garantia}
-                onChange={(e) => {
-                  handleInputChangeDatosAdquisicion(e);
-                }}
-              />
-            </div>
-          </div>
-        </fieldset>
-        <fieldset class="border p-4 mb-5 rounded">
-          <legend
-            class="float-none w-auto p-2 text-sm-start"
-            style={estiloLegend}
-          >
-            Accesorios{" "}
-          </legend>
-          <div className={estilos.accesorios}>
-            {datosRegistro.accesorios.map((accesorio, index) => {
-              return (
-                <div
-                  class="input-group mb-3 input-group-sm "
-                  className={estilos.accesoriosMap}
-                  key={index}
-                >
-                  <label class="input-group-text"> Accesorio y Cantidad:</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="accesorio"
-                    name="accesorio"
-                    value={accesorio.accesorio}
-                    onChange={(e) => {
-                      handleAccesorioChange(index, e);
-                    }}
-                    className={estilos.accesorio}
-                    placeholder="Ingrese el accesorio"
-                  />
-
-                  <input
-                    class="form-control"
-                    type="number"
-                    id="cantidad"
-                    name="cantidad"
-                    value={accesorio.cantidad}
-                    onChange={(e) => {
-                      handleAccesorioChange(index, e);
-                    }}
-                    className={estilos.cantidad}
-                  />
-                  <button
-                    class="btn btn-outline-secondary "
-                    data-toggle="Eliminar Accesorio"
-                    data-placement="left"
-                    title="Eliminar Accesorio"
-                    className={estilos.deleteAccesorio}
-                    type="button"
-                    onClick={() => handleRemoveAccesorio(index)}
-                  >
-                    <div class="input-group-addon">
-                      <i class="bi bi-trash"></i>
-                    </div>
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-          <div    data-toggle="Eliminar Accesorio"
-                    data-placement="left"
-                    title="Agregar nuevo accesorio">
-            <i
-              style={{
-                fontSize: "2rem",
-                color: "cornflowerblue",
-                cursor: "pointer",
-              }}
-              class="bi bi-plus-circle"
-              onClick={handleAddAccesorio}
-            ></i>
-          </div>
-        </fieldset>
+        {/* Componente que muestra los Accesorios */}
+        <Accesorios
+          estiloLegend={estiloLegend}
+          datosRegistro={datosRegistro}
+          handleAccesorioChange={handleAccesorioChange}
+          handleRemoveAccesorio={handleRemoveAccesorio}
+          handleAddAccesorio={handleAddAccesorio}
+        />
+        {/*Componente para mostrar datos de ubicacion del equipo */}
+        <DatosUbicacion
+          estiloLegend={estiloLegend}
+          datosRegistro={datosRegistro}
+          handleSelectChange4={handleSelectChange4}
+        />
+        <Protocolos
+          estiloLegend={estiloLegend}
+          datosRegistro={datosRegistro}
+          handleNombreProtocolo={handleNombreProtocolo}
+          handleAccionProtocoloChange={handleAccionProtocoloChange}
+          agregarAccionProtocolo={agregarAccionProtocolo}
+          handleRemoveAccion={handleRemoveAccion}
+        ></Protocolos>
+        <button onClick={handleSubmit}>Registrar equipo</button>
       </form>
+      <FormularioRegistroFormik/>
     </div>
   );
 };
