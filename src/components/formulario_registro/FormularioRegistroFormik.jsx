@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Formik, useFormik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
   Box,
@@ -9,10 +9,12 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import TextField from "./FormsUI/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Select from "./FormsUI/Select";
+import DateTimePicker from "./FormsUI/DataTimePicker";
 
 const INITIAL_FORM_STATE = {
   nombre: "",
@@ -57,13 +59,10 @@ const INITIAL_FORM_STATE = {
 };
 
 const FORM_VALIDATION = Yup.object().shape({});
-const FormularioRegistroFormik = () => {
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
+const FormularioRegistroFormik = () => {
   return (
-    <Container className="mt-3">
+    <Container className="mt-5">
       <Formik
         initialValues={{
           ...INITIAL_FORM_STATE,
@@ -76,6 +75,9 @@ const FormularioRegistroFormik = () => {
         <Form>
           <Box sx={{ width: "75%", margin: "0 auto" }}>
             <Grid container spacing={3} sx={{ width: "100%" }}>
+              <Grid container xs={12}>
+                <Typography>Datos Generales</Typography>
+              </Grid>
               <Grid item xs={12} md={6}>
                 <TextField name="nombre" label="Equipo" />
               </Grid>
@@ -145,6 +147,62 @@ const FormularioRegistroFormik = () => {
                     "ANUAL",
                   ]}
                 ></Select>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Select
+                  name="calibracion"
+                  label="Requiere Calibración"
+                  options={[true, false]}
+                ></Select>
+              </Grid>
+              <Grid container xs={12}>
+                <Typography>Datos Técnicos</Typography>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.voltaje" label="Voltaje" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.corriente" label="Corriente" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.frecuencia" label="Frecuencia" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.potencia" label="Potencia" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.temperatura" label="Temperatura" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.humedad" label="Humedad" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.peso" label="Peso" />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <TextField name="datosTecnicos.bateria" label="Batería" />
+              </Grid>
+              <Grid container xs={12}>
+                <Typography>Datos de Adquisición</Typography>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Select
+                  name="datosAdquisicion.forma_adquisicion"
+                  label="Forma de Adquisición"
+                  options={[
+                    "COMPRA",
+                    "DONACION",
+                    "PRESTAMO",
+                    "COMODATO",
+                    "ALQUILER",
+                  ]}
+                ></Select>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <DateTimePicker
+                  name="datosAdquisicion.fecha_adquisicion"
+                  label="Fecha de Adquisición"
+                />
               </Grid>
             </Grid>
           </Box>
