@@ -13,6 +13,7 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
   const configSelect = {
     ...field,
     ...otherProps,
+    size: "small",
     select: true,
     variant: "outlined",
     fullWidth: true,
