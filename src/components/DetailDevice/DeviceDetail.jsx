@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   borrarDetalle,
   getMedicalDeviceDetail,
-} from "../redux/actions/actions";
+} from "../../redux/actions/actions";
 import { useParams } from "react-router-dom";
-import estilos from "./home.module.css";
+import estilos from "../HomePage/home.module.css";
 
 const DeviceDetail = () => {
   const dispatch = useDispatch();

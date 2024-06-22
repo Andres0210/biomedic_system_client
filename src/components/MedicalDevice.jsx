@@ -1,72 +1,129 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMedicalDevices } from "../redux/actions/actions";
+import {  useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 
 // MedicalDevice es el componente que se va a ver en la lista de todos los equipos
 
 const MedicalDevice = () => {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   const equipos = useSelector((state) => state.listaEquipos);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const goToDetail = (id)=>{
-    navigate(`/device/${id}`)
-  }
+  const goToDetail = (id) => {
+    navigate(`/device/${id}`);
+  };
 
-  const goToRegister = ()=>{
-    navigate("/registroEquipo")
-  }
-  const goToRegisterFormik = ()=>{
-    navigate("/registroFormik")
-  }
+  useEffect(() => {}, []);
 
-  useEffect(() => {
-    const getDevices = async () => {
-      dispatch(getAllMedicalDevices());
-    };
-    getDevices();
-  }, []);
+  const columnasEquipo = [
+    "Equipo",
+    "Marca",
+    "Modelo",
+    "Serie",
+    "Activo",
+    "Registro Invima",
+    "Tipo de Riesgo",
+    "Sede",
+    "Servicio",
+    "Ubicación",
+    "Localización",
+  ];
   return (
     <div class="container mt-5">
-    <button onClick={goToRegister} class="btn btn-primary mb-4">Registrar Equipo</button>
-    <button onClick={goToRegisterFormik} class="btn btn-primary mb-4">Registrar Equipo Formik</button>
       <div class="container">
-        <table class="table table-hover table-striped table-bordered table-sm">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Equipo</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Modelo</th>
-              <th scope="col">Serie</th>
-              <th scope="col">Activo</th>
-              <th scope="col">Registro invima</th>
-              <th scope="col">Clas. Riesgo</th>
-              <th scope="col">Sede</th>
-              <th scope="col">Servicio</th>
-              <th scope="col">Ubicación</th>
-              <th scope="col">Localicación</th>
-            </tr>
-          </thead>
-          <tbody>
-            {equipos?.map((equipo, i) => {
-              return (
-                <tr key={i} onClick={()=>{goToDetail(equipo.id)}} style={{cursor: "pointer"}}>
-                  <th scope="row">{equipo.nombre}</th>
-                  <td>{equipo.marca}</td>
-                  <td>{equipo.modelo}</td>
-                  <td>{equipo.serie}</td>
-                  <td>{equipo.inventario}</td>
-                  <td>{equipo.invima}</td>
-                  <td>{equipo.riesgo}</td>
-                  <td>{equipo.datosUbicacion.sede}</td>
-                  <td>{equipo.datosUbicacion.servicio}</td>
-                  <td>{equipo.datosUbicacion.ubicacion}</td>
-                  <td>{equipo.datosUbicacion.localizacion}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 640 }}>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  {columnasEquipo.map((col, i) => {
+                    return (
+                      <TableCell
+                        align="left"
+                        style={{
+                          minWidth: 170,
+                          backgroundColor: "#0066FF",
+                          color: "white",
+                        }}
+                        key={i}
+                      >
+                        {col}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {equipos
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((equipo, index) => {
+                    return (
+                      <TableRow
+                        onClick={() => {
+                          goToDetail(equipo.id);
+                        }}
+                        style={{ cursor: "pointer" }}
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={index}
+                      >
+                        <TableCell align="left">{equipo.nombre}</TableCell>
+                        <TableCell align="left">{equipo.marca}</TableCell>
+                        <TableCell align="left">{equipo.modelo}</TableCell>
+                        <TableCell align="left">{equipo.serie}</TableCell>
+                        <TableCell align="left">{equipo.inventario}</TableCell>
+                        <TableCell align="left">{equipo.invima}</TableCell>
+                        <TableCell align="left">{equipo.riesgo}</TableCell>
+                        <TableCell align="left">
+                          {equipo.datosUbicacion.sede}
+                        </TableCell>
+                        <TableCell align="left">
+                          {equipo.datosUbicacion.servicio}
+                        </TableCell>
+                        <TableCell align="left">
+                          {equipo.datosUbicacion.ubicacion}
+                        </TableCell>
+                        <TableCell align="left">
+                          {equipo.datosUbicacion.localizacion}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, 100]}
+            component="div"
+            count={equipos.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage="Equipos por página"
+            className=""
+          />
+        </Paper>
       </div>
     </div>
   );

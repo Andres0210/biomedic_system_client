@@ -1,28 +1,16 @@
 import React from "react";
 import { FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
-import {
-  Box,
-  Button,
-  Container,
-  Fab,
-  FormControl,
-  FormGroup,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Fab, Grid, Tooltip, Typography } from "@mui/material";
 import TextField from "./FormsUI/TextField";
-import SendIcon from "@mui/icons-material/Send";
 import Select from "./FormsUI/Select";
 import DateTimePicker from "./FormsUI/DataTimePicker";
 import DatosUbicacionFormik from "./DatosUbicacionFormik";
-import AccesoriosFormik from "./AccesoriosFormik";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
 import { Add } from "@mui/icons-material";
+import Button from "./FormsUI/Button/ButtonWrapper";
+import axios from "axios";
+
 
 const INITIAL_FORM_STATE = {
   nombre: "",
@@ -111,10 +99,22 @@ const FORM_VALIDATION = Yup.object().shape({
     fecha_instalacion: Yup.date(),
     garantia: Yup.number().positive("Garantía debe ser un nuemro mayor a cero"),
   }),
-  accesorios: Yup.array().of(Yup.object().shape({
-    accesorio: Yup.string().required('Debe ingresar el nombre del accesorio'),
-    cantidad: Yup.number().min(1, 'La cantidad debe ser igual o mayor a 1').required('Debe ingresar una cantidad')
-  })),
+  datosUbicacion: Yup.object().shape({
+    sede: Yup.string().required("Seleccione una sede"),
+    servicio: Yup.string().required("Seleccione un servicio"),
+    ubicacion: Yup.string().required("Seleccione una ubicación específica"),
+    localizacion: Yup.string().required(
+      "Seleccione una localización específica"
+    ),
+  }),
+  accesorios: Yup.array().of(
+    Yup.object().shape({
+      accesorio: Yup.string().required("Debe ingresar el nombre del accesorio"),
+      cantidad: Yup.number()
+        .min(1, "La cantidad debe ser igual o mayor a 1")
+        .required("Debe ingresar una cantidad"),
+    })
+  ),
 });
 
 const estiloLegend = {
@@ -126,7 +126,11 @@ const estiloLegend = {
   margin: "20px",
 };
 
-const FormularioRegistroFormik = () => {
+const FormularioRegistroFormik =  () => {
+  const registroDevice = async (datos)=>{
+  await axios.post('http://localhost:8080/devices', datos)
+
+  }
   return (
     <Container className="mt-5">
       <Formik
@@ -135,7 +139,7 @@ const FormularioRegistroFormik = () => {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={(values) => {
-          console.log(values);
+          registroDevice(values);
         }}
       >
         {({ values }) => (
@@ -477,12 +481,9 @@ const FormularioRegistroFormik = () => {
               </div>
             </Box>
             <Button
-              type="submit"
-              variant="contained"
-              endIcon={<SendIcon />}
-              sx={{ marginTop: "30px" }}
+              
             >
-              Send
+              Registrar Equipo
             </Button>
           </Form>
         )}
