@@ -132,7 +132,7 @@ const FormularioRegistroFormik =  () => {
 
   }
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 pb-5">
       <Formik
         initialValues={{
           ...INITIAL_FORM_STATE,
@@ -153,38 +153,38 @@ const FormularioRegistroFormik =  () => {
                   Datos Generales
                 </Typography>
                 <Grid container spacing={3} sx={{ width: "100%" }}>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="nombre" label="Equipo" />
                   </Grid>
 
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="marca" label="Marca" />
                   </Grid>
 
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="modelo" label="Modelo" />
                   </Grid>
 
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="serie" label="Serie" />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="inventario" label="Inventario" />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="invima" label="Registro Invima" />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <TextField name="imagen" label="Imagen" />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <Select
                       name="riesgo"
                       label="Riesgo"
                       options={["I", "IIA", "IIB", "III"]}
                     ></Select>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <Select
                       name="clas_biomedica"
                       label="Clasificación Biomédica"
@@ -197,7 +197,7 @@ const FormularioRegistroFormik =  () => {
                       ]}
                     ></Select>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <Select
                       name="tecnologia"
                       label="Tecnología"
@@ -210,7 +210,7 @@ const FormularioRegistroFormik =  () => {
                       ]}
                     ></Select>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <Select
                       name="periocidad"
                       label="Frecuencia de Mantenimiento"
@@ -223,7 +223,7 @@ const FormularioRegistroFormik =  () => {
                       ]}
                     ></Select>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={4}>
                     <Select
                       name="calibracion"
                       label="Requiere Calibración"

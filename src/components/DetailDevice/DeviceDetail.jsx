@@ -6,6 +6,7 @@ import {
 } from "../../redux/actions/actions";
 import { useParams } from "react-router-dom";
 import estilos from "../HomePage/home.module.css";
+import { Container } from "@mui/material";
 
 const DeviceDetail = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const DeviceDetail = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       {equipo && (
         <div className={estilos.contenedor}>
           <div className={estilos.registroContainer}>
@@ -247,7 +248,7 @@ const DeviceDetail = () => {
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

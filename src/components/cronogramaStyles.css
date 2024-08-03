@@ -1,0 +1,21 @@
+.one {
+  height: 200px;
+  width: 70%;
+  background-color: #fff000;
+  margin: 0 auto;
+}
+.two {
+  height: 180px;
+  width: 70%;
+  background-color: #0000ff;
+  margin: 0 auto;
+}
+.three {
+  height: 180px;
+  width: 70%;
+  background-color: #800000;
+  margin: 0 auto;
+}
+.container{
+    padding: 40px;
+}

@@ -41,28 +41,28 @@ const DatosUbicacionFormik = ({ estiloLegend }) => {
     <div>
       <Typography class="float-none w-auto p-2 text-sm-start" style={estiloLegend}>Ubicación</Typography>
       <Grid container spacing={3} sx={{ width: "100%" }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={3}>
           <Select
             name="datosUbicacion.sede"
             label="Sede"
             options={sedesUnique}
           ></Select>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={3}>
           <Select
             name="datosUbicacion.servicio"
             label="Servicio"
             options={serviciosUnique}
           ></Select>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={3}>
           <Select
             name="datosUbicacion.ubicacion"
             label="Ubicación"
             options={ubicacionesUnique}
           ></Select>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={3}>
           <Select
             name="datosUbicacion.localizacion"
             label="Localización"

@@ -48,8 +48,8 @@ const MedicalDevice = () => {
     "Localización",
   ];
   return (
-    <div class="container mt-5">
-      <div class="container">
+    <div class="mt-2">
+      <div class="">
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 640 }}>
             <Table stickyHeader>
